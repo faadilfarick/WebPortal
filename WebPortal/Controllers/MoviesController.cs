@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -47,14 +48,40 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Venue,Description,Producer")] Movie movie)
+        public ActionResult Create([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
+            string fileName = System.Web.HttpContext.Current.User.Identity.Name + "movie";
+            string fileType = fileName.Substring(fileName.LastIndexOf('.'));
+            if (file != null && file.ContentLength > 0)
+            {
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/movieimages"), Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+                    string filePathString = path + "/" + fileName;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Error:" + ex.Message.ToString();
+                }
+
+            }
+            else
+            {
+                ViewBag.Message = "You have not specified a file. ";
+            }
+
             if (ModelState.IsValid)
             {
                 db.Movies.Add(movie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+
+
+
 
             return View(movie);
         }
@@ -117,6 +144,8 @@ namespace WebPortal.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {

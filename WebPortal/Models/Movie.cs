@@ -12,5 +12,6 @@ namespace WebPortal.Models
         public string Venue { get; set; }
         public string Description { get; set; }
         public string Producer { get; set; }
+        public string Image { get; set; }
     }
 }

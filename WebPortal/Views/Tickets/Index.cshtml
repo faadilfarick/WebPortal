@@ -11,10 +11,10 @@
     <tr>
         <th>
             <div>
-                <a class="btn-success" target="_blank" href="http://www.railway.gov.lk/web/index.php?option=com_content&view=article&id=61&Itemid=68&lang=en">Book Train Ticket</a>
+                Book Train Ticket <a class="btn-success" target="_blank" href="http://www.railway.gov.lk/web/index.php?option=com_content&view=article&id=61&Itemid=68&lang=en">Book Now</a>
             </div>
             <div>
-                <a class="btn-success" target="_blank" href="https://www.busbooking.lk/">Bus Booking</a>
+                Book Bus Ticket <a class="btn-success" target="_blank" href="https://www.busbooking.lk/">Book Now</a>
             </div>
         </th>
     </tr>
@@ -22,12 +22,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
-            {
-                @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
-                @Html.ActionLink("Details | ", "Details", new { id = item.ID })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            }
+            
         </td>
     </tr>
 }
