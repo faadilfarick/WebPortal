@@ -6754,4 +6754,22 @@ button.close {
     display: none !important;
   }
 }
+.movie-box:hover img {
+  opacity: .9; }
+.movie-box img {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle; }
+.movie-box ul {
+  display: block;
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  border-bottom: 1px solid gainsboro;
+  position: relative;
+  margin-bottom: 11px; }
+  .movie-box ul li {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 15px;
+    color: gray; }
 /*# sourceMappingURL=bootstrap.css.map */

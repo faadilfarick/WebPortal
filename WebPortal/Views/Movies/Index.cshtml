@@ -11,53 +11,23 @@
     {
         @Html.ActionLink("Create New", "Create")
     }
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Venue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Producer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th></th>
-    </tr>
+</p>    
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Venue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Producer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
-            {
-                @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
-                @Html.ActionLink("Details | ", "Details", new { id = item.ID })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            }
-        </td>
-    </tr>
+    <div style="margin: 10px; margin-bottom:30px; overflow:hidden; max-height:400px; max-width:300px; float:left;">
+
+        @Html.DisplayFor(modelItem => item.Title)        
+       
+        @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
+        {
+            @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
+            @Html.ActionLink("Details | ", "Details", new { id = item.ID })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        }       
+        <img src="@Url.Content("~/movieimages/" + @item.Image)" />
+                
+    </div>
 }
 
-</table>
+
+

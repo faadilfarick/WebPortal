@@ -6,7 +6,6 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/Content/bootstrap.css" />
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -37,9 +36,9 @@
         @RenderBody()
         @RenderSection("SPAViews", required: false)
         <hr />
-        <footer>
+        <footer style="float:right">
 
-            <div class="footer " style="background-color:aliceblue">
+            <div class="footer ">
                 <div class="container  ">
                     <div class="col-md-3 col-lg-3 ">
                         <h3>Telephone</h3>

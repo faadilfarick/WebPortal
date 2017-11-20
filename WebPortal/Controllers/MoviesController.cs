@@ -50,20 +50,21 @@ namespace WebPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
-            string fileName = System.Web.HttpContext.Current.User.Identity.Name + "movie";
+            string fileName = System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
             string fileType = fileName.Substring(fileName.LastIndexOf('.'));
-            if (file != null && file.ContentLength > 0)
+            if ((file != null && file.ContentLength > 0) && ((fileType == ".jpg") ||(fileType == ".jpeg") || (fileType == ".png")) )
             {
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/movieimages"), Path.GetFileName(file.FileName));
+                    string path = Path.Combine(Server.MapPath("~/movieimages/"))+ fileName;
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
-                    string filePathString = path + "/" + fileName;
+                    string filePathString = path;
+                    movie.Image = fileName;
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Error:" + ex.Message.ToString();
+                    ViewBag.Message = "Error: File is Not Selected or is not an image. Upload only \".jpg\" \".jpeg\" or \".png\" file types" + ex.Message.ToString();
                 }
 
             }
@@ -78,10 +79,6 @@ namespace WebPortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-
-
-
 
             return View(movie);
         }
