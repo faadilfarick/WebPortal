@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security;
 using System.Web;
 using System.Web.Mvc;
 using WebPortal.Models;
@@ -50,7 +51,7 @@ namespace WebPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
-            string fileName = System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
+            string fileName = DateTime.Now.Hour + DateTime.Now.Minute + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
             string fileType = fileName.Substring(fileName.LastIndexOf('.'));
             if ((file != null && file.ContentLength > 0) && ((fileType == ".jpg") ||(fileType == ".jpeg") || (fileType == ".png")) )
             {
@@ -113,7 +114,7 @@ namespace WebPortal.Controllers
                 return RedirectToAction("Index");
             }
             return View(movie);
-        }
+        }       
 
         // GET: Movies/Delete/5
         [Authorize(Users = "admin@gmail.com")]

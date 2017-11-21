@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -36,7 +37,7 @@ namespace WebPortal.Controllers
         }
 
         // GET: Businesses/Create
-        [Authorize(Users = "admin@gmail.com")]
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -60,9 +61,14 @@ namespace WebPortal.Controllers
         }
 
         // GET: Businesses/Edit/5
-        [Authorize(Users = "admin@gmail.com")]
+        [Authorize(Users = "admin@gmail.com, gofaadil@live.com")]
         public ActionResult Edit(int? id)
         {
+            if (User.Identity.GetUserName() == System.Web.HttpContext.Current.User.Identity.Name)
+            {
+
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

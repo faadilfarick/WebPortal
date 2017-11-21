@@ -11,6 +11,6 @@ namespace WebPortal.Models
         public string Title { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
-        public string Owner { get; set; }
+        public string Owner { get; set; }//in order to detect the original creator of the businness
     }
 }
