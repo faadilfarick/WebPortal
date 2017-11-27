@@ -48,8 +48,9 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Address,Description,Owner")] Business business)
+        public ActionResult Create([Bind(Include = "ID,Title,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
         {
+            business.Owner = System.Web.HttpContext.Current.User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Businesses.Add(business);
@@ -61,12 +62,15 @@ namespace WebPortal.Controllers
         }
 
         // GET: Businesses/Edit/5
-        [Authorize(Users = "admin@gmail.com, gofaadil@live.com")]
-        public ActionResult Edit(int? id)
+        [Authorize]
+        public ActionResult Edit(int? id, string owner)
         {
-            if (User.Identity.GetUserName() == System.Web.HttpContext.Current.User.Identity.Name)
+            //Authorizing Edit permission only for the owner of the business and the admin
+            if ( !( (System.Web.HttpContext.Current.User.Identity.Name == 
+                    Convert.ToString(db.Businesses.Where(s => s.Owner.Contains(System.Web.HttpContext.Current.User.Identity.Name))))
+                    || User.Identity.Name == "admin@gmail.com" ) )
             {
-
+                return View(db.Businesses.ToList());
             }
 
             if (id == null)

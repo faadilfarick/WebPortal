@@ -6,7 +6,7 @@
 
 <h2>Details</h2>
 
-<div>
+<div style="float:left;">
     <h4>Movie</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -27,14 +27,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Producer)
         </dt>
 
@@ -42,11 +34,32 @@
             @Html.DisplayFor(model => model.Producer)
         </dd>
 
+        
+
     </dl>
 </div>
-<p>
-    @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com") {
-        @Html.ActionLink("Edit | ", "Edit", new { id = Model.ID }) 
-    }
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div style="margin-left: 400px; overflow:hidden; max-height:500px; max-width:350px;">
+    <img src="@Url.Content("~/movieimages/" + Model.Image)" />
+</div>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+
+</div>
+<div style="">
+    <p>
+        @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com") {
+            @Html.ActionLink("Edit | ", "Edit", new { id = Model.ID })
+            @Html.ActionLink("Delete | ", "Delete", new { id = Model.ID })
+        }
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+

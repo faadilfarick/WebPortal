@@ -21,9 +21,16 @@
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
+        <dd>
+            @Html.DisplayNameFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Address)
+            @Html.DisplayFor(model => model.Category)
         </dd>
 
         <dt>
@@ -35,16 +42,28 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Owner)
+            @Html.DisplayNameFor(model => model.Latitude)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Owner)
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitude)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if ((System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
+                        || (System.Web.HttpContext.Current.User.Identity.Name == Model.Owner))
+    {
+        @Html.ActionLink("Edit | ", "Edit", new { id = Model.ID, owner = Model.Owner })
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
+    }
 </p>

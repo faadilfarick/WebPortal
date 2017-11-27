@@ -7,10 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
-    {
-        @Html.ActionLink("Create New", "Create")
-    }
+    @Html.ActionLink("Add your Business", "Create")
 </p>
 <table class="table">
     <tr>
@@ -22,9 +19,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Owner)
         </th>
         <th></th>
     </tr>
@@ -41,13 +35,11 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Owner)
-        </td>
-        <td>
-            @if ((System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com") || ())
+            @Html.ActionLink("Details ", "Details", new { id = item.ID })
+            @if ((System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com") 
+                || (System.Web.HttpContext.Current.User.Identity.Name == item.Owner))
             {
-                @Html.ActionLink("Edit | ", "Edit", new { id = item.ID }) 
-                @Html.ActionLink("Details | ", "Details", new { id = item.ID })
+                @Html.ActionLink("| Edit | ", "Edit", new { id = item.ID, owner = item.Owner }) 
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             }
         </td>
