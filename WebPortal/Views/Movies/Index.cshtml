@@ -4,7 +4,7 @@
     ViewBag.Title = "Movies";
 }
 
-<h2>Index</h2>
+<h2>Movies</h2>
 
 <p>
     @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
@@ -26,30 +26,15 @@
         }  
         <a href=@Url.Action("Details", new { id = item.ID })>
             <img src="@Url.Content("~/movieimages/" + @item.Image)"/>
-            <div>
+            <div class="carousel-inner">
                 @Html.DisplayFor(modelItem => item.Title)
-
-                @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
-                {
-                    @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
-                    //@Html.ActionLink("Details | ", "Details", new { id = item.ID })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                }
             </div>
         </a>
 
                 
     </div>
 }
-<div>
-    <h3>Newly added Businesses</h3>
 
-</div><hr />
-
-<div>
-    <h3>Newly added Movies</h3>
-
-</div>
 
 
 

@@ -288,6 +288,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeViewModels.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\Paymentinfo.cs" />
     <Compile Include="Models\PaypalConfiguration.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -424,6 +425,11 @@
     <Content Include="Views\Paypal\PaymentWithCreditCard.cshtml" />
     <Content Include="Views\Paypal\Success.cshtml" />
     <Content Include="Views\Paypal\Index.cshtml" />
+    <Content Include="Views\Paymentinfoes\Create.cshtml" />
+    <Content Include="Views\Paymentinfoes\Delete.cshtml" />
+    <Content Include="Views\Paymentinfoes\Details.cshtml" />
+    <Content Include="Views\Paymentinfoes\Edit.cshtml" />
+    <Content Include="Views\Paymentinfoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

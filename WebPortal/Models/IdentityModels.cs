@@ -39,5 +39,7 @@ namespace WebPortal.Models
         public System.Data.Entity.DbSet<WebPortal.Models.Ticket> Tickets { get; set; }
 
         public System.Data.Entity.DbSet<WebPortal.Models.Movie> Movies { get; set; }
+
+        public System.Data.Entity.DbSet<WebPortal.Models.Paymentinfo> Paymentinfoes { get; set; }
     }
 }

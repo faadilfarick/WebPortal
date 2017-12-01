@@ -5,22 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Data;
+using System.Data.Entity;
 
 namespace WebPortal.Controllers
 {
     public class PaypalController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Paypal
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult PaymentWithCreditCard()
+        public ActionResult PaymentWithCreditCard([Bind(Include = "ID,ItemName,ItemPrice,ItemQuantity,cvv,month,year,fname,lname,cardnumber,cardtype,Subtotal,Total,Shipping,Tax")] Paymentinfo paymentinfo)
         {
-
             Item item = new Item();
             item.name = "Demo Item";
-            item.currency = "USD";
+            item.currency = "LKR";
             item.price = "100";
             item.quantity = "1";
             item.sku = "sku";
@@ -49,18 +52,20 @@ namespace WebPortal.Controllers
             crdtCard.first_name = "Dileepa";
             crdtCard.last_name = "Rajapaksa";
             crdtCard.number = "4403590697872419"; //Card Number Here
+            crdtCard.number = paymentinfo.cardnumber.ToString();
             crdtCard.type = "visa";
 
 
             Details details = new Details();
-            details.shipping = "1";
+            details.shipping = "0";
             details.subtotal = "100";
-            details.tax = "1";
+            details.tax = "0";
 
             Amount amnt = new Amount();
             amnt.currency = "USD";
 
-            amnt.total = "102";
+            amnt.total = "100";
+            amnt.total = paymentinfo.Total.ToString();
             amnt.details = details;
 
 
