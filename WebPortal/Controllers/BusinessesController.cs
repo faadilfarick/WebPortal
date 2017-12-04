@@ -63,21 +63,13 @@ namespace WebPortal.Controllers
 
         // GET: Businesses/Edit/5
         [Authorize]
-        public ActionResult Edit(int? id, string owner)
+        public ActionResult Edit([Bind(Include = "ID,Title,Address,Category,Description,Latitude,Longitute,Owner")] int? id, Business business)
         {
-            //Authorizing Edit permission only for the owner of the business and the admin
-            if ( !( (System.Web.HttpContext.Current.User.Identity.Name == 
-                    Convert.ToString(db.Businesses.Where(s => s.Owner.Contains(System.Web.HttpContext.Current.User.Identity.Name))))
-                    || User.Identity.Name == "admin@gmail.com" ) )
-            {
-                return View(db.Businesses.ToList());
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Business business = db.Businesses.Find(id);
+            business = db.Businesses.Find(id);
             if (business == null)
             {
                 return HttpNotFound();

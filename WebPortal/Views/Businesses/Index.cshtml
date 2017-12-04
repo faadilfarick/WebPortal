@@ -39,7 +39,7 @@
             @if ((System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com") 
                 || (System.Web.HttpContext.Current.User.Identity.Name == item.Owner))
             {
-                @Html.ActionLink("| Edit | ", "Edit", new { id = item.ID, owner = item.Owner }) 
+                @Html.ActionLink("| Edit | ", "Edit", new { id = item.ID }) 
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             }
         </td>

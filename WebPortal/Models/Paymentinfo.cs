@@ -18,8 +18,9 @@ namespace WebPortal.Models
         public int year { get; set; }
         public string fname { get; set; }
         public string lname { get; set; }
-        public int cardnumber { get; set; }
+        public string cardnumber { get; set; }
         public string cardtype { get; set; }
+        public int fee { get; set; }
 
         public int Subtotal { get; set; }
         public int Total { get; set; }
