@@ -30,11 +30,19 @@ namespace WebPortal.Controllers
         public ActionResult PaymentWithCreditCard([Bind(Include = "ID,ItemName,ItemPrice,ItemQuantity,cvv,month,year,fname,lname,cardnumber,cardtype,fee,Subtotal,Total,Shipping,Tax")]
         Paymentinfo paymentinfo)
         {
+            Business business = new Business();
 
             Item item = new Item();
             item.name = "Demo Item";
             item.currency = "USD";
-            item.price = paymentinfo.fee.ToString();
+            if (!(business.Title == null))
+            {
+                item.price = "20";
+            }
+            else
+            {
+                item.price = paymentinfo.fee.ToString();
+            }
             item.quantity = "1";
             item.sku = "sku";
 
@@ -63,12 +71,12 @@ namespace WebPortal.Controllers
             crdtCard.last_name = paymentinfo.lname;
             crdtCard.number = paymentinfo.cardnumber.ToString(); //Card Number Here
             //crdtCard.number = paymentinfo.cardnumber.ToString(); //card number
-            crdtCard.type = "visa";
+            crdtCard.type = paymentinfo.cardtype;
 
 
             Details details = new Details();
             details.shipping = "0";
-            details.subtotal = paymentinfo.fee.ToString();
+            details.subtotal = item.price;
             details.tax = "0";
 
             Amount amnt = new Amount();
@@ -130,17 +138,16 @@ namespace WebPortal.Controllers
             {
                 Logger.Log("Error: " + ex.Message);
                 return View("Failure");
-            }
-            Business business = new Business();
-            business.Title = TempData["Title"].ToString();
-            business.Address = TempData["Address"].ToString();
-            business.Category = TempData["Category"].ToString();
-            business.Description = TempData["Description"].ToString();
-            business.Latitude = Convert.ToDouble(TempData["Latitude"]);
-            business.Longitude = Convert.ToDouble(TempData["Longitude"]);
+            }            
 
-            if (!(business == null))
+            if (!(business.Title == null))
             {
+                business.Title = TempData["Title"].ToString();
+                business.Address = TempData["Address"].ToString();
+                business.Category = TempData["Category"].ToString();
+                business.Description = TempData["Description"].ToString();
+                business.Latitude = Convert.ToDouble(TempData["Latitude"]);
+                business.Longitude = Convert.ToDouble(TempData["Longitude"]);
                 business.Owner = System.Web.HttpContext.Current.User.Identity.Name;
                 if (ModelState.IsValid)
                 {
