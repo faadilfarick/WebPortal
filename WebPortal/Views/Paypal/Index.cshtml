@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Paymentinfo.cardnumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Paymentinfo.cardnumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Paymentinfo.cardnumber, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
                 @Html.ValidationMessageFor(model => model.Paymentinfo.cardnumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -76,8 +76,8 @@
             @Html.LabelFor(model => model.Paymentinfo.fee, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 
-                @Html.EditorFor(model => model.Paymentinfo.fee, new { htmlAttributes = new { @Value = "5", disabled = "disabled", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Paymentinfo.fee, "", new { @class = "text-danger", @readonly = "readonly", @Value = 10 })
+                @Html.EditorFor(model => model.Paymentinfo.fee, new { htmlAttributes = new { @Value = "10", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Paymentinfo.fee, "", new { @class = "text-danger" })
             </div>
         </div>
 

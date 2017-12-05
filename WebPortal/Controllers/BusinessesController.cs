@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,9 +17,47 @@ namespace WebPortal.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Businesses
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Businesses.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var businesses = from s in db.Businesses
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                businesses = businesses.Where(s => s.Name.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "City":
+                    businesses = businesses.OrderBy(s => s.City);
+                    break;
+                case "category":
+                    businesses = businesses.OrderBy(s => s.Category);
+                    break;
+                default:  // Name ascending 
+                    businesses = businesses.OrderBy(s => s.Name);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(businesses.ToPagedList(pageNumber, pageSize));
+
+            //return View(db.Businesses.ToList());
         }
 
         // GET: Businesses/Details/5
@@ -48,7 +87,7 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
+        public ActionResult Create([Bind(Include = "ID,Title,City,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
         {
             business.Owner = System.Web.HttpContext.Current.User.Identity.Name;
             if (ModelState.IsValid)

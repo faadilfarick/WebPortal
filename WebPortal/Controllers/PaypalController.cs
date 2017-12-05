@@ -16,9 +16,10 @@ namespace WebPortal.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Paypal
-        public ActionResult Index([Bind(Include = "ID,Title,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
+        public ActionResult Index([Bind(Include = "ID,Name,City,Address,Category,Description,Latitude,Longitude,Owner")] Business business)
         {
-            TempData["Title"] = business.Title;
+            TempData["Name"] = business.Name;
+            TempData["City"] = business.City;
             TempData["Address"] = business.Address;
             TempData["Category"] = business.Category;
             TempData["Description"] = business.Description;
@@ -35,7 +36,7 @@ namespace WebPortal.Controllers
             Item item = new Item();
             item.name = "Demo Item";
             item.currency = "USD";
-            if (!(business.Title == null))
+            if (!(business.Name == null))
             {
                 item.price = "20";
             }
@@ -138,17 +139,19 @@ namespace WebPortal.Controllers
             {
                 Logger.Log("Error: " + ex.Message);
                 return View("Failure");
-            }            
+            }
 
-            if (!(business.Title == null))
+            business.Name = TempData["Name"].ToString();
+            business.City = TempData["City"].ToString();
+            business.Address = TempData["Address"].ToString();
+            business.Category = TempData["Category"].ToString();
+            business.Description = TempData["Description"].ToString();
+            business.Latitude = Convert.ToDouble(TempData["Latitude"]);
+            business.Longitude = Convert.ToDouble(TempData["Longitude"]);
+            business.Owner = System.Web.HttpContext.Current.User.Identity.Name;
+
+            if (!(business.City == null))
             {
-                business.Title = TempData["Title"].ToString();
-                business.Address = TempData["Address"].ToString();
-                business.Category = TempData["Category"].ToString();
-                business.Description = TempData["Description"].ToString();
-                business.Latitude = Convert.ToDouble(TempData["Latitude"]);
-                business.Longitude = Convert.ToDouble(TempData["Longitude"]);
-                business.Owner = System.Web.HttpContext.Current.User.Identity.Name;
                 if (ModelState.IsValid)
                 {
                     db.Businesses.Add(business);
