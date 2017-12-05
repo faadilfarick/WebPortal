@@ -16,12 +16,19 @@ namespace WebPortal.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Paypal
-        public ActionResult Index()
+        public ActionResult Index([Bind(Include = "ID,Title,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
         {
-            return View();
+            TempData["Title"] = business.Title;
+            TempData["Address"] = business.Address;
+            TempData["Category"] = business.Category;
+            TempData["Description"] = business.Description;
+            TempData["Latitude"] = business.Latitude;
+            TempData["Longitude"] = business.Longitude;
+
+            return View ("Index");
         }
         public ActionResult PaymentWithCreditCard([Bind(Include = "ID,ItemName,ItemPrice,ItemQuantity,cvv,month,year,fname,lname,cardnumber,cardtype,fee,Subtotal,Total,Shipping,Tax")]
-        Paymentinfo paymentinfo, [Bind(Include = "ID,Title,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
+        Paymentinfo paymentinfo)
         {
 
             Item item = new Item();
@@ -124,6 +131,13 @@ namespace WebPortal.Controllers
                 Logger.Log("Error: " + ex.Message);
                 return View("Failure");
             }
+            Business business = new Business();
+            business.Title = TempData["Title"].ToString();
+            business.Address = TempData["Address"].ToString();
+            business.Category = TempData["Category"].ToString();
+            business.Description = TempData["Description"].ToString();
+            business.Latitude = Convert.ToDouble(TempData["Latitude"]);
+            business.Longitude = Convert.ToDouble(TempData["Longitude"]);
 
             if (!(business == null))
             {
