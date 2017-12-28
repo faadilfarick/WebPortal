@@ -13,27 +13,30 @@
     }
 </p>    
 
-@foreach (var item in Model) {
-    <div style="margin: 10px; margin-bottom:30px; overflow:hidden; max-height:500px; max-width:370px; float:left;">
+<div class="container">
+    <div class="row">    
+        <div class="jumbotron" style="float:left;">
+            <h2>Now Screening...</h2>
+            @foreach (var item in Model)
+            {
+                <div style="float:left">
 
-        @Html.DisplayFor(modelItem => item.Title)        
-       
-        @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
-        {
-            @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
-            //@Html.ActionLink("Details | ", "Details", new { id = item.ID })
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-        }  
-        <a href=@Url.Action("Details", new { id = item.ID })>
-            <img src="@Url.Content("~/movieimages/" + @item.Image)"/>
-            <div class="carousel-inner">
-                @Html.DisplayFor(modelItem => item.Title)
-            </div>
-        </a>
+                    @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
+                    {
+                        @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    }<br />
 
-                
+                    <a href=@Url.Action("Details", new { id = item.ID })>
+                    <img src="~/movieimages/@item.Image" class="img-responsive img-thumbnail"
+                         style="max-width:350px; min-width:350px; max-height:350px; min-height:350px; display:inline" /><br />
+                    <center>@Html.DisplayFor(modelItem => item.Title)</center>
+                    </a>
+                </div>
+             }
+        </div>
     </div>
-}
+</div>
 
 
 

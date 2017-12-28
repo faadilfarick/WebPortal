@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "Details";
 }
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
 
 <h2>Details</h2>
 
@@ -41,29 +47,32 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Back To List", "Index")
     @if ((System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
                         || (System.Web.HttpContext.Current.User.Identity.Name == Model.Owner))
     {
-        @Html.ActionLink("Edit | ", "Edit", new { id = Model.ID, owner = Model.Owner })
+        @Html.ActionLink("| Edit | ", "Edit", new { id = Model.ID, owner = Model.Owner })
         @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
     }
 </p>
+
+<div id="map"></div>
+<script>
+      function initMap() {
+          var uluru = {
+              lat: @Model.Latitude, lng: @Model.Longitude};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARHuahw5SpMgJe4mleC4ZA8PL6xLnKQHM&callback=initMap">
+</script>

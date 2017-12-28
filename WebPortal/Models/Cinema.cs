@@ -13,6 +13,7 @@ namespace WebPortal.Models
         public int Seats { get; set; }//Number of seats
         public List<NowScreening> Movies { get; set; }
         public List<ScreeningTime> Time { get; set; }
+        public IEnumerable<string> ColumnList { get; set; } // for generating the SelectLists
 
     }
 

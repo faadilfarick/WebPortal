@@ -6,44 +6,35 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<p>
+    @if (System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
+    {
+        @Html.ActionLink("Edit | ", "Edit", new { id = Model.ID })
+        @Html.ActionLink("Delete | ", "Delete", new { id = Model.ID })
+    }
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+<hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Venue)
-        </dt>
+<div class="container">
+    <div class="row">
+        <div>
+            <p>
+                <img src="~/eventimages/@Model.Image" class="img-responsive img-thumbnail" style="max-height:350px; display:inline" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Venue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
+            </p>
+        </div>
+        <div>
+            <h1>@Html.DisplayFor(model => model.Title)<br /></h1>
             @Html.DisplayFor(model => model.Description)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Organizer)
-        </dt>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Organizer)
-        </dd>
+    </div>
 
-    </dl>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")

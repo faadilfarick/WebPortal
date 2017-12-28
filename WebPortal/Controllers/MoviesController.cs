@@ -19,7 +19,10 @@ namespace WebPortal.Controllers
         // GET: Movies
         public ActionResult Index()
         {
-            return View(db.Movies.ToList());
+            var movies = from s in db.Movies
+                         select s;
+            movies = movies.OrderByDescending(s => s.ID);
+            return View(movies.ToList());
         }
 
         // GET: Movies/Details/5
@@ -51,7 +54,8 @@ namespace WebPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
-            string fileName = DateTime.Now.Hour + DateTime.Now.Minute + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
+            string fileName = DateTime.Now.DayOfYear.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
+                + DateTime.Now.Second.ToString() + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
             string fileType = fileName.Substring(fileName.LastIndexOf('.'));
             if ((file != null && file.ContentLength > 0) && ((fileType == ".jpg") ||(fileType == ".jpeg") || (fileType == ".png")) )
             {
@@ -107,7 +111,8 @@ namespace WebPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
-            string fileName = DateTime.Now.Hour + DateTime.Now.Minute + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
+            string fileName = DateTime.Now.DayOfYear.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
+                + DateTime.Now.Second.ToString() + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
             string fileType = fileName.Substring(fileName.LastIndexOf('.'));
             if ((file != null && file.ContentLength > 0) && ((fileType == ".jpg") || (fileType == ".jpeg") || (fileType == ".png")))
             {

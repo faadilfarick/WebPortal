@@ -286,6 +286,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712280720565_event_time_updated.cs" />
+    <Compile Include="Migrations\201712280720565_event_time_updated.Designer.cs">
+      <DependentUpon>201712280720565_event_time_updated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Business.cs" />
@@ -296,6 +300,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeViewModels.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovienCinema.cs" />
     <Compile Include="Models\Paymentinfo.cs" />
     <Compile Include="Models\PaymentnBusiness.cs" />
     <Compile Include="Models\PaypalConfiguration.cs" />
@@ -317,6 +322,20 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="movieimages\27admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\32admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\36admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\43admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\44admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\45admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\54admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\55admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\56admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\58admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\64admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\70admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\admin%40gmail.commovie.jpg" />
+    <Content Include="movieimages\Ceiling.jpg" />
     <Content Include="Scripts\app\_run.js" />
     <Content Include="Scripts\app\app.datamodel.js" />
     <Content Include="Scripts\app\app.viewmodel.js" />
@@ -344,7 +363,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -353,7 +371,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -445,14 +462,21 @@
     <Content Include="Views\Cinemas\Details.cshtml" />
     <Content Include="Views\Cinemas\Edit.cshtml" />
     <Content Include="Views\Cinemas\Index.cshtml" />
+    <Content Include="Views\Shared\_MoviePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="eventimages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712280720565_event_time_updated.resx">
+      <DependentUpon>201712280720565_event_time_updated.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

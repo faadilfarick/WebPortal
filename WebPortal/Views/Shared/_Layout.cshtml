@@ -27,6 +27,10 @@
                     <li>@Html.ActionLink("Find  Business", "Index", "Businesses", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Movies", "Index", "Movies", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Tickets", "Index", "Tickets", new { area = "" }, null)</li>
+                    @if (User.Identity.Name == "admin@gmail.com")
+                    {
+                        <li>@Html.ActionLink("Cinemas", "Index", "Cinemas", new { area = "" }, null)</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
