@@ -52,7 +52,7 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "ID,Title,Category,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
             string fileName = DateTime.Now.DayOfYear.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
                 + DateTime.Now.Second.ToString() + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
@@ -109,7 +109,7 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Venue,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
+        public ActionResult Edit([Bind(Include = "ID,Title,Category,Description,Producer,Image")] Movie movie, HttpPostedFileBase file)
         {
             string fileName = DateTime.Now.DayOfYear.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
                 + DateTime.Now.Second.ToString() + System.Web.HttpContext.Current.User.Identity.Name + "movie.jpg";
@@ -173,8 +173,10 @@ namespace WebPortal.Controllers
 
         public List<Movie> Passmovie()
         {
-            var movList = db.Movies.ToList();
-            return movList;
+            var movies = from s in db.Movies
+                         select s;
+            movies = movies.OrderByDescending(s => s.ID);
+            return movies.ToList();
         }
 
         

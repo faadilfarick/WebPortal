@@ -1,18 +1,16 @@
 ﻿@using WebPortal.Controllers;
 
 
-    @foreach (var business in new BusinessesController().Passbusiness())
+    @foreach (var business in new BusinessesController().Passbusiness().Take(5))
     {
         <div style="float:left; padding:6px;">
 
             <a href=@Url.Action("Details", "Movies", new { id = business.ID })>
                 <img src="~/businessimages/@business.Image" class="img-responsive img-thumbnail"
                      style="max-width:215px; max-height:180px; min-width:210px; min-height:180px; display:inline" />
-                <center>@Html.DisplayFor(modelItem => business.Name)</center>
+                
             </a>
+            <center><h4>@Html.DisplayFor(modelItem => business.Name)</h4></center>
+            <center><h5>(@Html.DisplayFor(modelItem => business.Category))</h5></center>
         </div>
-        if (business.ID == 7)
-        {
-            break; // get out of the loop
-        }
     }

@@ -1,7 +1,7 @@
 ﻿@using WebPortal.Controllers;
 
 
-    @foreach (var movies in new MoviesController().Passmovie())
+    @foreach (var movies in new MoviesController().Passmovie().Take(5))
     {
         <div style="float:left; padding:6px;">
 
@@ -10,9 +10,6 @@
                      style="max-width:215px; max-height:180px; min-width:210px; min-height:180px; display:inline" />
                 <center>@Html.DisplayFor(modelItem => movies.Title)</center>
             </a>
+            <center><h5>(@Html.DisplayFor(modelItem => movies.Category))</h5></center>
         </div>
-        if (movies.ID == 6)
-        {
-            break; // get out of the loop
-        }
     }

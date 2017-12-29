@@ -172,8 +172,10 @@ namespace WebPortal.Controllers
 
         public List<Event> Passevent()
         {
-            var eveList = db.Events.ToList();
-            return eveList;
+            var events = from s in db.Events
+                         select s;
+            events = events.OrderByDescending(s => s.ID);
+            return events.ToList();
         }
 
         protected override void Dispose(bool disposing)

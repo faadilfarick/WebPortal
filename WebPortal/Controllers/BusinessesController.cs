@@ -187,8 +187,10 @@ namespace WebPortal.Controllers
 
         public List<Business> Passbusiness()
         {
-            var buslist = db.Businesses.ToList();
-            return buslist;
+            var business = from s in db.Businesses
+                         select s;
+            business = business.OrderByDescending(s => s.ID);
+            return business.ToList();
         }
         protected override void Dispose(bool disposing)
         {

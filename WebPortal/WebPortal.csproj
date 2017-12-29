@@ -290,6 +290,10 @@
     <Compile Include="Migrations\201712280720565_event_time_updated.Designer.cs">
       <DependentUpon>201712280720565_event_time_updated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712291551284_ojnon.cs" />
+    <Compile Include="Migrations\201712291551284_ojnon.Designer.cs">
+      <DependentUpon>201712291551284_ojnon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Business.cs" />
@@ -481,6 +485,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712280720565_event_time_updated.resx">
       <DependentUpon>201712280720565_event_time_updated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712291551284_ojnon.resx">
+      <DependentUpon>201712291551284_ojnon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
