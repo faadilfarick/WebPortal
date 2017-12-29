@@ -1,15 +1,18 @@
 ﻿@using WebPortal.Controllers;
 
-<div class="jumbotron">
+
     @foreach (var events in new EventsController().Passevent())
     {
-        <div style="float:left">
+        <div style="float:left; padding:6px;">
 
             <a href=@Url.Action("Details", "Movies", new { id = events.ID })>
                 <img src="~/eventimages/@events.Image" class="img-responsive img-thumbnail"
-                     style="max-width:160px; max-height:100px; min-width:160px; min-height:100px; display:inline" />
+                     style="max-width:215px; max-height:180px; min-width:210px; min-height:180px; display:inline" />
                 <center>@Html.DisplayFor(modelItem => events.Title)</center>
             </a>
         </div>
+        if (events.ID == 6)
+        {
+            break; // get out of the loop
+        }
     }
-</div>
