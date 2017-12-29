@@ -171,6 +171,12 @@ namespace WebPortal.Controllers
             return RedirectToAction("Index");
         }
 
+        public List<Movie> Passmovie()
+        {
+            var movList = db.Movies.ToList();
+            return movList;
+        }
+
         
 
         protected override void Dispose(bool disposing)

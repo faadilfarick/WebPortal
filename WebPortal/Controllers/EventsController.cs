@@ -170,6 +170,12 @@ namespace WebPortal.Controllers
             return RedirectToAction("Index");
         }
 
+        public List<Event> Passevent()
+        {
+            var eveList = db.Events.ToList();
+            return eveList;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

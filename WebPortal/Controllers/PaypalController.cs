@@ -9,6 +9,7 @@ using System.Net;
 using System.Data;
 using System.Data.Entity;
 using WebPortal;
+using System.IO;
 
 namespace WebPortal.Controllers
 {
@@ -16,16 +17,41 @@ namespace WebPortal.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Paypal
-        public ActionResult Index([Bind(Include = "ID,Name,City,Address,Category,Description,Latitude,Longitude,Owner")] Business business,
-            [Bind(Include = "ID,Title,Venue,Description,Producer,Image,Time,Date,Cinema,Comments")] Movie movie)
+        public ActionResult Index([Bind(Include = "ID,Name,City,Address,Category,Description,Image,Latitude,Longitude,Owner")] Business business,
+            [Bind(Include = "ID,Title,Venue,Description,Producer,Image,Time,Date,Cinema,Comments")] Movie movie, HttpPostedFileBase file)
         {
             if(business.Name != null)
             {
+                string fileName = DateTime.Now.DayOfYear.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
+                + DateTime.Now.Second.ToString() + System.Web.HttpContext.Current.User.Identity.Name + "business.jpg";
+                string fileType = fileName.Substring(fileName.LastIndexOf('.'));
+                if ((file != null && file.ContentLength > 0) && ((fileType == ".jpg") || (fileType == ".jpeg") || (fileType == ".png")))
+                {
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/businessimages/")) + fileName;
+                        file.SaveAs(path);
+                        ViewBag.Message = "File uploaded successfully";
+                        string filePathString = path;
+                        business.Image = fileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "Error: File is Not Selected or is not an image. Upload only \".jpg\" \".jpeg\" or \".png\" file types" + ex.Message.ToString();
+                    }
+
+                }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file. ";
+                }
+
                 TempData["Name"] = business.Name;
                 TempData["City"] = business.City;
                 TempData["Address"] = business.Address;
                 TempData["Category"] = business.Category;
                 TempData["Description"] = business.Description;
+                TempData["Image"] = business.Image;
                 TempData["Latitude"] = business.Latitude;
                 TempData["Longitude"] = business.Longitude;
 
@@ -163,6 +189,7 @@ namespace WebPortal.Controllers
                 business.Address = TempData["Address"].ToString();
                 business.Category = TempData["Category"].ToString();
                 business.Description = TempData["Description"].ToString();
+                business.Image = TempData["Image"].ToString();
                 business.Latitude = Convert.ToDouble(TempData["Latitude"]);
                 business.Longitude = Convert.ToDouble(TempData["Longitude"]);
                 business.Owner = System.Web.HttpContext.Current.User.Identity.Name;

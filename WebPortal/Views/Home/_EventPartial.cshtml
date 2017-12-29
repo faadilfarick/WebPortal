@@ -1,0 +1,15 @@
+﻿@using WebPortal.Controllers;
+
+<div class="jumbotron">
+    @foreach (var events in new EventsController().Passevent())
+    {
+        <div style="float:left">
+
+            <a href=@Url.Action("Details", "Movies", new { id = events.ID })>
+                <img src="~/eventimages/@events.Image" class="img-responsive img-thumbnail"
+                     style="max-width:160px; max-height:100px; min-width:160px; min-height:100px; display:inline" />
+                <center>@Html.DisplayFor(modelItem => events.Title)</center>
+            </a>
+        </div>
+    }
+</div>

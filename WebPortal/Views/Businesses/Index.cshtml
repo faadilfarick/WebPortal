@@ -20,7 +20,34 @@
     </p>
 }
 
-<table class="table">
+<div class="container">
+    <div class="row">
+        <div class="jumbotron" style="float:left;">
+            @foreach (var item in Model)
+            {
+                <div style="float:left">
+
+                    @if ((System.Web.HttpContext.Current.User.Identity.Name == "admin@gmail.com")
+                        || (System.Web.HttpContext.Current.User.Identity.Name == item.Owner))
+                    {
+                        @Html.ActionLink("Edit | ", "Edit", new { id = item.ID })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    }<br />
+
+                    <a href=@Url.Action("Details", new { id = item.ID })>
+                        <img src="~/businessimages/@item.Image" class="img-responsive img-thumbnail"
+                             style="max-width:350px; min-width:350px; max-height:350px; min-height:350px; display:inline" /><br />
+                        <center>@Html.DisplayFor(modelItem => item.Name)</center>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@*<table class="table">
     <tr>
         <th>
             Name
@@ -57,7 +84,7 @@
     </tr>
 }
 
-</table>
+</table>*@
 <center>
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,12 +49,12 @@ namespace WebPortal.Controllers
                 case "category":
                     businesses = businesses.OrderBy(s => s.Category);
                     break;
-                default:  // Name ascending 
-                    businesses = businesses.OrderBy(s => s.Name);
+                default:  // ID descendinf 
+                    businesses = businesses.OrderByDescending(s => s.ID);
                     break;
             }
 
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(businesses.ToPagedList(pageNumber, pageSize));
 
@@ -87,9 +88,9 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,City,Address,Category,Description,Latitude,Longitute,Owner")] Business business)
+        public ActionResult Create([Bind(Include = "ID,Title,City,Address,Category,Description,Image,Latitude,Longitute,Owner")]
+        Business business, HttpPostedFileBase file)
         {
-            business.Owner = System.Web.HttpContext.Current.User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Businesses.Add(business);
@@ -121,8 +122,33 @@ namespace WebPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Address,Description,Owner")] Business business)
+        public ActionResult Edit([Bind(Include = "ID,Name,City,Address,Category,Description,Image,Latitude,Longitute,Owner")]
+        Business business, HttpPostedFileBase file)
         {
+            string fileName = DateTime.Now.DayOfYear.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
+                + DateTime.Now.Second.ToString() + System.Web.HttpContext.Current.User.Identity.Name + "business.jpg";
+            string fileType = fileName.Substring(fileName.LastIndexOf('.'));
+            if ((file != null && file.ContentLength > 0) && ((fileType == ".jpg") || (fileType == ".jpeg") || (fileType == ".png")))
+            {
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/businessimages/")) + fileName;
+                    file.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+                    string filePathString = path;
+                    business.Image = fileName;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Error: File is Not Selected or is not an image. Upload only \".jpg\" \".jpeg\" or \".png\" file types" + ex.Message.ToString();
+                }
+
+            }
+            else
+            {
+                ViewBag.Message = "You have not specified a file. ";
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(business).State = EntityState.Modified;
@@ -157,6 +183,12 @@ namespace WebPortal.Controllers
             db.Businesses.Remove(business);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public List<Business> Passbusiness()
+        {
+            var buslist = db.Businesses.ToList();
+            return buslist;
         }
         protected override void Dispose(bool disposing)
         {
