@@ -8,8 +8,9 @@
             <a href=@Url.Action("Details", "Movies", new { id = movies.ID })>
                 <img src="~/movieimages/@movies.Image" class="img-responsive img-thumbnail"
                      style="max-width:215px; max-height:180px; min-width:210px; min-height:180px; display:inline" />
-                <center>@Html.DisplayFor(modelItem => movies.Title)</center>
             </a>
+            <center>@Html.DisplayFor(modelItem => movies.Title)</center>
+            
             <center><h5>(@Html.DisplayFor(modelItem => movies.Category))</h5></center>
         </div>
     }

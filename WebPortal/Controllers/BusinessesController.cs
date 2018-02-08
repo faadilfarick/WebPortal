@@ -54,7 +54,7 @@ namespace WebPortal.Controllers
                     break;
             }
 
-            int pageSize = 10;
+            int pageSize = 9;
             int pageNumber = (page ?? 1);
             return View(businesses.ToPagedList(pageNumber, pageSize));
 
